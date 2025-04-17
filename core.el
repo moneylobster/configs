@@ -439,6 +439,7 @@ its value at the REPL."
 (add-hook 'lisp-mode-hook 'electric-pair-local-mode)
 
 (use-package adjust-parens
+  :ensure t
   :defer t
   :hook ((lisp-mode emacs-lisp-mode) . adjust-parens-mode))
 
