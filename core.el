@@ -145,6 +145,9 @@
   :ensure t
   :defer t)
 
+(use-package ef-themes
+  :ensure t)
+
 (use-package all-the-icons
   :if (display-graphic-p)
   :ensure t)
@@ -166,37 +169,10 @@
 ;; auto dark mode.
 (use-package auto-dark
   :ensure t
-  :config (auto-dark-mode t))
-
-(use-package dirvish
-  :ensure t
-  :init (dirvish-override-dired-mode)
   :config
-  (setq dirvish-attributes           ; The order *MATTERS* for some attributes
-        '(vc-state subtree-state nerd-icons git-msg file-time file-size)
-        dirvish-side-attributes
-        '(vc-state nerd-icons file-size))
-  (setq dirvish-preview-dispatchers (remove 'image dirvish-preview-dispatchers))
-  (setq dirvish-default-layout nil)
-  :bind
-  (("C-x d" . dirvish-dwim)
-   :map dirvish-mode-map
-   ("C-v" . dirvish-yank)
-   ("?"   . dirvish-dispatch)          ; [?] a helpful cheatsheet
-   ("a"   . dirvish-setup-menu)        ; [a]ttributes settings:`t' toggles mtime, `f' toggles fullframe, etc.
-   ("f"   . dirvish-file-info-menu)    ; [f]ile info
-   ("o"   . dirvish-quick-access)      ; [o]pen `dirvish-quick-access-entries'
-   ("s"   . dirvish-quicksort)         ; [s]ort flie list
-   ("r"   . dirvish-history-jump)      ; [r]ecent visited
-   ("l"   . dirvish-ls-switches-menu)  ; [l]s command flags
-   ("v"   . dirvish-vc-menu)           ; [v]ersion control commands
-   ("*"   . dirvish-mark-menu)
-   ("y"   . dirvish-yank-menu)
-   ("N"   . dirvish-narrow)
-   ("^"   . dirvish-history-last)
-   ("TAB" . dirvish-subtree-toggle)
-   ("M-f" . dirvish-history-go-forward)
-   ("M-b" . dirvish-history-go-backward)))
+  (auto-dark-mode t)
+  (setq auto-dark-light-theme 'ef-light)
+  (setq auto-dark-dark-theme 'ef-dark))
 
 ;;LSP stuff
 (use-package eglot
@@ -561,6 +537,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-M-w") 'beginning-of-buffer)
 (global-set-key (kbd "C-M-e") 'end-of-buffer)
+(global-set-key (kbd "M-w") 'back-to-indentation)
 (global-set-key (kbd "C-t") 'tab-switch)
 (global-set-key (kbd "C-b") 'ivy-switch-buffer)
 (global-set-key (kbd "<f7>") 'org-agenda)
