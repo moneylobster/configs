@@ -292,7 +292,9 @@
 (use-package dired
   :bind (:map dired-mode-map
 			  ("C-t" . tab-switch)
-			  ("M-<up>". dired-up-directory)))
+			  ("M-<up>". dired-up-directory))
+  :config
+  (setq dired-dwim-target t))
 
 (use-package expand-region
   :ensure t
