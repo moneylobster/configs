@@ -561,6 +561,8 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "<pinch>") 'ignore)
 (global-set-key (kbd "<C-wheel-up>") 'ignore)
 (global-set-key (kbd "<C-wheel-down>") 'ignore)
+(global-set-key (kbd "<C-M-wheel-up>") 'ignore)
+(global-set-key (kbd "<C-M-wheel-down>") 'ignore)
 
 ;; start emacs server
 (require 'server)
