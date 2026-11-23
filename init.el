@@ -2028,11 +2028,6 @@ Index includes links and headings."
    "ffmpeg -i \"<<f>>\" -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p \"<<fne>>.mp4\""
    :utils "ffmpeg"))
 
-(defun ag/totp-git ()
-  "get TOTP for github"
-  (interactive)
-  (async-shell-command "totp-cli g personal github"))
-
 ;; rebind keys
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-f") 'isearch-forward)
