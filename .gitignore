@@ -1,0 +1,9 @@
+local.el
+*.elc
+*.eln
+eln-cache/
+
+# Legacy WIP modular split; kept locally only.
+windows.el
+laptop.el
+custom-functions.el
