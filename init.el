@@ -83,10 +83,11 @@
 (defvar ag/full-p nil)
 
 (defvar ag/core-packages
-  '(ivy counsel avy ivy-rich which-key winum winner
-    doom-themes doom-modeline minions
+  '(ivy counsel avy ivy-rich which-key winum winner olivetti
+    doom-themes ef-themes doom-modeline minions
     corfu cape yasnippet helpful
-    magit expand-region markdown-mode)
+    magit expand-region markdown-mode turkish multiple-cursors
+    popper dwim-shell-command)
   "Packages installed even when `ag/profile' is `minimal'.")
 
 ;; Portable defaults.  local.el overrides these; a fresh clone still loads.
@@ -183,6 +184,10 @@
       `(use-package ,name :if (ag/package-available-p ',name) ,@args))))
 
 ;;PACKAGES
+;; Global minor modes are enabled from `after-init-hook', not from
+;; `dashboard-after-initialize-hook': the latter fires only when the
+;; dashboard package is installed, so a minimal profile would otherwise
+;; start with no ivy/counsel/which-key/winum/winner/modeline.
 
 (ag/use-package ivy
   :ensure t
@@ -198,7 +203,7 @@
   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
   (setq ivy-use-virtual-buffers 'recentf)
   :hook
-  (dashboard-after-initialize . ivy-mode)
+  (after-init-hook . ivy-mode)
   :bind (:map ivy-minibuffer-map
               ("C-SPC" . ivy-toggle-mark)))
 
@@ -207,7 +212,7 @@
   :config
   (setq ivy-initial-inputs-alist nil)
   :hook
-  (dashboard-after-initialize . counsel-mode))
+  (after-init-hook . counsel-mode))
 
 (ag/use-package avy
   :ensure t)
@@ -262,14 +267,14 @@
 											   (ivy-rich-package-install-summary
 												(:face font-lock-doc-face))))))
   :hook
-  (dashboard-after-initialize . ivy-rich-mode))
+  (after-init-hook . ivy-rich-mode))
 
 (ag/use-package which-key
   :ensure t
   :custom
   (which-key-sort-order 'which-key-key-order-alpha)
   :hook
-  (dashboard-after-initialize . which-key-mode))
+  (after-init-hook . which-key-mode))
 
 ;;winum to switch between windows easily
 (defun switch-to-minibuffer ()
@@ -292,11 +297,11 @@
   ("M-9" . winum-select-window-9)
   ("M-0" . switch-to-minibuffer)
   :hook
-  (dashboard-after-initialize . winum-mode))
+  (after-init-hook . winum-mode))
 
 (ag/use-package winner
   :hook
-  (dashboard-after-initialize . winner-mode))
+  (after-init-hook . winner-mode))
 
 (ag/use-package transpose-frame
   :ensure t)
@@ -334,7 +339,10 @@
   :ensure t)
 
 (ag/use-package ef-themes
-  :ensure t)
+  :ensure t
+  :config
+  ;; Base theme; `auto-dark' (full profile only) swaps dark/light later.
+  (ef-themes-load-theme 'ef-melissa-light))
 
 ;;modeline swag
 (ag/use-package doom-modeline
@@ -349,7 +357,7 @@
   (doom-modeline-enable-word-count t)
   (doom-modeline-unicode-number nil)
   :hook
-  (dashboard-after-initialize . doom-modeline-mode))
+  (after-init-hook . doom-modeline-mode))
 
 ;; hide minor modes
 (ag/use-package minions
@@ -362,7 +370,6 @@
   :config
   (setq auto-dark-themes '((ef-melissa-dark) (ef-melissa-light)))
   (setq auto-dark-polling-interval-seconds 300)
-  (ef-themes-load-theme 'ef-melissa-light)
   (auto-dark-mode t))
 
 (ag/use-package ultra-scroll
@@ -2078,8 +2085,8 @@ Index includes links and headings."
 
 ;; start emacs server
 (require 'server)
-(add-hook 'dashboard-after-initialize-hook (lambda () (unless (server-running-p)
-														(server-start))))
+(add-hook 'after-init-hook (lambda () (unless (server-running-p)
+										(server-start))))
 (put 'set-goal-column 'disabled nil)
 
 (add-hook 'kill-emacs-hook
